@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+BASE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/../"
+
+if [ $# -eq 0 ]
+then
+    echo "USAGE: $0 [options] file..."
+    exit 0
+fi
+
+exec clang++ -Xclang -load -Xclang $BASE/build/CallCounter/libCallCounterPass.so "$@" \
+-L$BASE/build/Runtime -lruntime -Wl,-rpath=$BASE/build/Runtime
