@@ -19,6 +19,12 @@ namespace
 
     bool runOnFunction(Function &F) override
     {
+      if (F.isIntrinsic())
+        return false;
+
+      if (F.getInstructionCount() == 0)
+        return false;
+
       Module *M = F.getParent();
       LLVMContext &C = M->getContext();
       M->getOrInsertFunction(kCallCounterName, Type::getVoidTy(C), Type::getInt8PtrTy(C));
@@ -45,7 +51,8 @@ namespace
         {
           if (auto *Call = dyn_cast<CallInst>(&I))
           {
-            if (Call->getCalledFunction()->getName() == "exit")
+            Function *Callee = Call->getCalledFunction();
+            if (Callee && Callee->getName() == "exit")
             {
               IRB.SetInsertPoint(Call);
               IRB.CreateCall(M->getFunction(KCallCounterReport));
