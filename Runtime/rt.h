@@ -3,7 +3,7 @@
 
 extern "C"
 {
-  void __callcounter(const char *func_name);
+  void __callcounter(char *func_name);
   void __callcounter_report();
 }
 

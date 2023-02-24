@@ -75,5 +75,5 @@ static void registerCallCounterPass(const PassManagerBuilder &,
 }
 
 static RegisterStandardPasses
-    RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible,
+    RegisterMyPass(PassManagerBuilder::EP_OptimizerLast,
                    registerCallCounterPass);

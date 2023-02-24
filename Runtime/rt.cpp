@@ -19,7 +19,7 @@ extern "C"
     report.open("call_counter_report.txt");
 
     for (auto &kv : __callcounter_map)
-      report << *kv.first << ": " << kv.second << std::endl;
+      report << kv.first << ": " << kv.second << std::endl;
 
     report.close();
   }
